@@ -42,7 +42,6 @@ def exec_assume_role(arg_list) -> Dict[str, str]:
 
     # success - extract token details from JSON response
     response = json.loads(result.stdout)
-
     if "Credentials" not in response:
         exit_error("unexpected response from `aws sts assume-role`")
 
