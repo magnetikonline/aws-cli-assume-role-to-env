@@ -4,7 +4,6 @@ import json
 import os
 import subprocess
 import sys
-from typing import Dict, List
 
 
 def exit_error(message: str) -> None:
@@ -12,7 +11,7 @@ def exit_error(message: str) -> None:
     sys.exit(1)
 
 
-def run_cmd(argument_list: List[str]) -> subprocess.CompletedProcess:
+def run_cmd(argument_list: list[str]) -> subprocess.CompletedProcess:
     return subprocess.run(
         argument_list, encoding="utf-8", stderr=subprocess.PIPE, stdout=subprocess.PIPE
     )
@@ -26,7 +25,7 @@ def find_aws_cli() -> str:
     return result.stdout.rstrip()
 
 
-def pass_args_list() -> List[str]:
+def pass_args_list() -> list[str]:
     if len(sys.argv) <= 1:
         exit_error(
             "expecting arguments to be passed onto `aws sts assume-role` (e.g. --role-arn | --role-session-name)"
@@ -35,7 +34,7 @@ def pass_args_list() -> List[str]:
     return sys.argv[1:]
 
 
-def exec_assume_role(arg_list) -> Dict[str, str]:
+def exec_assume_role(arg_list) -> dict[str, str]:
     result = run_cmd(["aws", "sts", "assume-role", "--output", "json"] + arg_list)
     if result.returncode != 0:
         exit_error(f"error executing `aws sts assume-role`\n\n===={result.stderr}====")
